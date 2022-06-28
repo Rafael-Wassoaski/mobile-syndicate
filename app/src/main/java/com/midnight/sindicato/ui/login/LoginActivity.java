@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.midnight.sindicato.SignUpActivity;
 import com.midnight.sindicato.databinding.ActivityLoginBinding;
 import com.midnight.sindicato.ui.MainActivity;
 import com.midnight.sindicato.R;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
+    private TextView signUpTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,19 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        signUpTextView = findViewById(R.id.sign_up);
+
         final EditText cpfEditText = binding.cpf;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
+
+        signUpTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setNewActivityView(SignUpActivity.class);
+            }
+        });
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -81,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                 //Complete and destroy login activity once successful
                 finish();
 
-                setMainActivityView();
+                setNewActivityView(MainActivity.class);
             }
         });
 
@@ -126,13 +137,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void setMainActivityView(){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("Message", "teste");
-
+    private void setNewActivityView(Class<?> clss){
+        Intent intent = new Intent(this,clss);
         startActivity(intent);
     }
-
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience

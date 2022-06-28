@@ -27,10 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         tableLayout = (TableLayout) findViewById(R.id.tableLayout1);
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra("Message");
-
-        Log.d("Message", message);
         Drawable img = getApplicationContext().getResources().getDrawable(R.drawable.ic_info);
         img.setBounds( 0, 0, 256, 256 );
         img.setColorFilter( 0xffff0000, PorterDuff.Mode.MULTIPLY );

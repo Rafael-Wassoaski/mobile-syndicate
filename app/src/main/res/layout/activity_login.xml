@@ -66,17 +66,14 @@
         app:layout_constraintVertical_bias="0.3" />
 
     <TextView
-        android:id="@+id/signup"
+        android:id="@+id/sign_up"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="340dp"
-        android:text="@string/signup_text"
+        android:layout_height="wrap_content"
+        android:text="@string/cadastre_se"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login"
-        tools:text="@string/signup_text" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintVertical_bias="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
