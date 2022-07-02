@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
+    <Button
+        android:id="@+id/cadastroButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="56dp"
+        android:enabled="false"
+        android:text="@string/cadastre_se"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password_cadastro" />
+
     <EditText
         android:id="@+id/cpf_cadastro"
         android:layout_width="wrap_content"
@@ -72,14 +85,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_cadastro" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="129dp"
-        android:background="#B2B2B2"
-        android:text="@string/cadastre_se"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm_password_cadastro" />
 </androidx.constraintlayout.widget.ConstraintLayout>
