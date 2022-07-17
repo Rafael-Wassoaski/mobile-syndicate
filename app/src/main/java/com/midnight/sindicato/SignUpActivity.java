@@ -24,11 +24,12 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                confirmPasswords();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                confirmPasswords();
+//                confirmPasswords();
             }
         };
     }
@@ -49,15 +50,20 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void confirmPasswords() {
-        password.setError(null);
-        Boolean a = password.getText().toString() != passwordConfirm.getText().toString();
+        password.setError("aaaaaaa");
+        Boolean a = password.getText().toString().equals(passwordConfirm.getText().toString());
         Log.d("teste", "teste " + a.toString());
+        Log.d("teste", "password " + password.getText().toString());
+        Log.d("teste", "passwordConfirm " + passwordConfirm.getText().toString());
 
-        if (password.getText().toString() != passwordConfirm.getText().toString()) {
+        if (!a) {
+            Log.d("teste", "entrou" );
+
             password.setError("Senhas não coincidem");
             signUpButton.setActivated(false);
             return;
         }
+        Log.d("teste", "nao entrou" );
 
         signUpButton.setActivated(true);
     }
