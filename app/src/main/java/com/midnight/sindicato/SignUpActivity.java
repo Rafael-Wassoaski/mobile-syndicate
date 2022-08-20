@@ -24,12 +24,11 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                confirmPasswords();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-//                confirmPasswords();
+                confirmPasswords();
             }
         };
     }
@@ -43,28 +42,20 @@ public class SignUpActivity extends AppCompatActivity {
         passwordConfirm = findViewById(R.id.confirm_password_cadastro);
         signUpButton = findViewById(R.id.cadastroButton);
 
-        signUpButton.setActivated(false);
+        signUpButton.setEnabled(false);
 
-        password.addTextChangedListener(getPasswordWatcher());
         passwordConfirm.addTextChangedListener(getPasswordWatcher());
     }
 
     private void confirmPasswords() {
-        password.setError("aaaaaaa");
-        Boolean a = password.getText().toString().equals(passwordConfirm.getText().toString());
-        Log.d("teste", "teste " + a.toString());
-        Log.d("teste", "password " + password.getText().toString());
-        Log.d("teste", "passwordConfirm " + passwordConfirm.getText().toString());
+        passwordConfirm.setError(null);
 
-        if (!a) {
-            Log.d("teste", "entrou" );
-
-            password.setError("Senhas não coincidem");
-            signUpButton.setActivated(false);
+        if (!password.getText().toString().equals(passwordConfirm.getText().toString())) {
+            passwordConfirm.setError("Senhas não coincidem");
+            signUpButton.setEnabled(false);
             return;
         }
-        Log.d("teste", "nao entrou" );
 
-        signUpButton.setActivated(true);
+        signUpButton.setEnabled(true);
     }
 }
