@@ -1,18 +1,18 @@
-package com.midnight.sindicato.entity.implementation;
+package com.midnight.sindicato.controller.implementation;
 
 import android.util.Log;
 import android.view.View;
 
-import com.midnight.sindicato.entity.Action;
+import com.midnight.sindicato.controller.ActionController;
 
-public class News extends Action {
+public class NewsController extends ActionController {
 
-    public News(){
+    public NewsController(){
         super("Notícias");
     }
 
     @Override
-    public String performeAction() {
+    public String performAction() {
         return null;
     }
 

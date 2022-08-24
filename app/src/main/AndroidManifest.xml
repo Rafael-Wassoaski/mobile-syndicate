@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sindicato">
         <activity
+            android:name=".ui.certificate.CertificateActivity"
+            android:exported="false"
+            android:label="@string/title_activity_certificate"
+            android:theme="@style/Theme.Sindicato.NoActionBar" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false"
             android:parentActivityName=".ui.login.LoginActivity">

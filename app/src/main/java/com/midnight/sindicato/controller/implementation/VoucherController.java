@@ -1,18 +1,18 @@
-package com.midnight.sindicato.entity.implementation;
+package com.midnight.sindicato.controller.implementation;
 
 import android.util.Log;
 import android.view.View;
 
-import com.midnight.sindicato.entity.Action;
+import com.midnight.sindicato.controller.ActionController;
 
-public class Voucher extends Action {
+public class VoucherController extends ActionController {
 
-    public Voucher(){
+    public VoucherController(){
         super("Vales");
     }
 
     @Override
-    public String performeAction() {
+    public String performAction() {
         return "Voucher";
     }
 
