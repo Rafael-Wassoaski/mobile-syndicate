@@ -8,10 +8,12 @@
     tools:context=".ui.certificate.CertificateActivity"
     tools:showIn="@layout/activity_certificate">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+        android:layout_marginBottom="712dp"
+        android:stretchColumns="0,1">
+    </TableLayout>
 
 </androidx.core.widget.NestedScrollView>

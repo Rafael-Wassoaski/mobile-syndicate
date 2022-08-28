@@ -10,13 +10,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.midnight.sindicato.R;
 import com.midnight.sindicato.databinding.ActivityCertificateBinding;
+import com.midnight.sindicato.entity.Certificate;
 
 public class CertificateActivity extends AppCompatActivity {
 
     private ActivityCertificateBinding binding;
+    private TableLayout tableLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +34,34 @@ public class CertificateActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
         toolBarLayout.setTitle(getTitle());
+        this.tableLayout = (TableLayout) findViewById(R.id.tableLayout1);
 
-        FloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Certificate certificate = new Certificate("Vale real", "teste de vale com esse tamanho");
+
+        this.addCertificateRow(certificate);
+    }
+
+
+    private void addCertificateRow(Certificate certificate){
+        TableRow row = new TableRow(this);
+        TextView certificateName = new TextView(this);
+        TextView certificateDescription = new TextView(this);
+
+        certificateName.setText(certificate.getName());
+        certificateDescription.setText(certificate.getDescription());
+
+        row.addView(certificateName);
+        row.addView(certificateDescription);
+
+        if(certificate.getLastIssue() != null){
+            TextView certificateLastIssue = new TextView(this);
+            certificateLastIssue.setText(certificate.getLastIssue().toString());
+        }
+
+        if(certificate.getNextIssue() != null){
+            TextView certificateNextIssue = new TextView(this);
+            certificateNextIssue.setText(certificate.getNextIssue().toString());
+        }
+        tableLayout.addView(row);
     }
 }

@@ -11,6 +11,8 @@ public class Certificate {
     public Certificate(String name, String description){
         this.name = name;
         this.description = description;
+        this.lastIssue = null;
+        this.nextIssue = null;
     }
 
     public Certificate(String name, String description, Date lastIssue){
