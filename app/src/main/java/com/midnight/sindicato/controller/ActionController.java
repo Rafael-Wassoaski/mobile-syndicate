@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.midnight.sindicato.R;
+import com.midnight.sindicato.ui.certificate.CertificateActivity;
 
 public abstract class ActionController {
     private String actionName;
@@ -37,5 +40,10 @@ public abstract class ActionController {
 
     public abstract String performAction();
 
-    public abstract void clickAction(View view);
+    protected abstract Class<?> getControllerActivity();
+
+    public void clickAction(View view){
+        Intent myIntent = new Intent(view.getContext(), getControllerActivity());
+        view.getContext().startActivity(myIntent);
+    }
 }

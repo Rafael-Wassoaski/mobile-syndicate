@@ -19,8 +19,7 @@ public class CertificateController extends ActionController {
     }
 
     @Override
-    public void clickAction(View view) {
-        Intent myIntent = new Intent(view.getContext(), CertificateActivity.class);
-        view.getContext().startActivity(myIntent);
+    protected Class<?> getControllerActivity() {
+        return CertificateActivity.class;
     }
 }

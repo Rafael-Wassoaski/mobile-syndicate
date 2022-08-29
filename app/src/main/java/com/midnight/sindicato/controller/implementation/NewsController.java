@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.midnight.sindicato.controller.ActionController;
+import com.midnight.sindicato.ui.MainActivity;
 
 public class NewsController extends ActionController {
 
@@ -17,7 +18,7 @@ public class NewsController extends ActionController {
     }
 
     @Override
-    public void clickAction(View view) {
-        Log.d("Click aqui", "Clicou news");
+    protected Class<?> getControllerActivity() {
+        return MainActivity.class;
     }
 }

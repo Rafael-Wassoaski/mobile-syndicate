@@ -4,10 +4,11 @@ import android.util.Log;
 import android.view.View;
 
 import com.midnight.sindicato.controller.ActionController;
+import com.midnight.sindicato.ui.MainActivity;
 
 public class VoucherController extends ActionController {
 
-    public VoucherController(){
+    public VoucherController() {
         super("Vales");
     }
 
@@ -17,7 +18,7 @@ public class VoucherController extends ActionController {
     }
 
     @Override
-    public void clickAction(View view) {
-        Log.d("Click aqui", "Clicou Voucher");
+    protected Class<?> getControllerActivity() {
+        return MainActivity.class;
     }
 }
