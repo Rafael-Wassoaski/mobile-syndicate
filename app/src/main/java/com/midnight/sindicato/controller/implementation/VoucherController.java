@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.midnight.sindicato.controller.ActionController;
 import com.midnight.sindicato.ui.MainActivity;
+import com.midnight.sindicato.ui.voucher.VoucherActivity;
 
 public class VoucherController extends ActionController {
 
@@ -19,6 +20,6 @@ public class VoucherController extends ActionController {
 
     @Override
     protected Class<?> getControllerActivity() {
-        return MainActivity.class;
+        return VoucherActivity.class;
     }
 }

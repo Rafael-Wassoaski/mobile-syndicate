@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sindicato">
         <activity
+            android:name=".ui.voucher.VoucherActivity"
+            android:exported="false"
+            android:label="@string/title_activity_voucher"
+            android:theme="@style/Theme.Sindicato.NoActionBar" />
+        <activity
+            android:name=".ui.news.NewsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_news"
+            android:theme="@style/Theme.Sindicato.NoActionBar" />
+        <activity
             android:name=".ui.certificate.CertificateActivity"
             android:exported="false"
             android:label="@string/title_activity_certificate"

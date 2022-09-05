@@ -2,25 +2,26 @@ package com.midnight.sindicato.entity;
 
 import java.util.Date;
 
-public class Certificate implements BaseDocument {
+public class Voucher implements BaseDocument{
+
     private String name;
     private String description;
     private Date lastIssue;
     private Date nextIssue;
 
-    public Certificate(String name, String description){
+    public Voucher(String name, String description){
         this.name = name;
         this.description = description;
         this.lastIssue = null;
         this.nextIssue = null;
     }
 
-    public Certificate(String name, String description, Date lastIssue){
+    public Voucher(String name, String description, Date lastIssue){
         this(name, description);
         this.lastIssue = lastIssue;
     }
 
-    public Certificate(String name, String description, Date lastIssue, Date nextIssue){
+    public Voucher(String name, String description, Date lastIssue, Date nextIssue){
         this(name, description, lastIssue);
         this.nextIssue = nextIssue;
     }
@@ -40,5 +41,4 @@ public class Certificate implements BaseDocument {
     public Date getNextIssue() {
         return nextIssue;
     }
-
 }

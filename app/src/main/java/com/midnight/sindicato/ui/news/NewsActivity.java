@@ -1,4 +1,4 @@
-package com.midnight.sindicato.ui.certificate;
+package com.midnight.sindicato.ui.news;
 
 import android.os.Bundle;
 
@@ -8,17 +8,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.midnight.sindicato.R;
 import com.midnight.sindicato.controller.TableController;
-import com.midnight.sindicato.databinding.ActivityCertificateBinding;
-import com.midnight.sindicato.entity.Certificate;
+import com.midnight.sindicato.databinding.ActivityNewsBinding;
+import com.midnight.sindicato.entity.News;
 
-public class CertificateActivity extends AppCompatActivity {
+public class NewsActivity extends AppCompatActivity {
 
-    private ActivityCertificateBinding binding;
+    private ActivityNewsBinding binding;
     private TableLayout tableLayout;
     private TableController tableController;
 
@@ -27,7 +25,7 @@ public class CertificateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityCertificateBinding.inflate(getLayoutInflater());
+        binding = ActivityNewsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         Toolbar toolbar = binding.toolbar;
@@ -37,10 +35,11 @@ public class CertificateActivity extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
         toolBarLayout.setTitle(getTitle());
         this.tableLayout = (TableLayout) findViewById(R.id.tableLayout1);
+
         tableController = new TableController(tableLayout, this);
 
-        Certificate certificate = new Certificate("Vale real", "teste de vale com esse tamanho");
+        News news = new News("Deu boa", "Resumo da news", "Minha news total");
 
-        tableController.addRow(certificate);
+        tableController.addRow(news);
     }
 }
