@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sindicato">
         <activity
+            android:name=".CertificateViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.voucher.VoucherActivity"
             android:exported="false"
             android:label="@string/title_activity_voucher"
