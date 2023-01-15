@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sindicato">
-        <activity
-            android:name=".CertificateViewActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".CertificateViewActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ui.voucher.VoucherActivity"
             android:exported="false"
