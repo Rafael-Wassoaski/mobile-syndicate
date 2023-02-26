@@ -1,6 +1,7 @@
 package com.midnight.sindicato.data;
 
 import com.midnight.sindicato.data.model.LoggedInUser;
+import com.midnight.sindicato.ui.login.LoginViewModel;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -37,18 +38,14 @@ public class LoginRepository {
         dataSource.logout();
     }
 
-    private void setLoggedInUser(LoggedInUser user) {
-        this.user = user;
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
+    public void setLoggedUserData(Result<LoggedInUser> result ){
+        if (result instanceof Result.Success) {
+            this.user = ((Result.Success<LoggedInUser>) result).getData();
+        }
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public void login(String username, String password, LoginViewModel loginViewModel) {
         // handle login
-        Result<LoggedInUser> result = dataSource.login(username, password);
-        if (result instanceof Result.Success) {
-            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
-        }
-        return result;
+        dataSource.login(username, password, loginViewModel);
     }
 }

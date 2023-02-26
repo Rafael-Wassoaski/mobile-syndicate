@@ -1,5 +1,7 @@
 package com.midnight.sindicato.util;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import okhttp3.Call;
@@ -13,6 +15,8 @@ public class RequestMaker<T> {
     private OkHttpClient httpClient = new OkHttpClient();
 
     public Call post(T entity, String url){
+
+        Log.d("Request" , "Post para " + url);
         Gson gson = new Gson();
         String userJson = gson.toJson(entity);
 

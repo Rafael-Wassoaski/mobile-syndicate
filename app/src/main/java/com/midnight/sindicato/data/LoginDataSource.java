@@ -1,37 +1,59 @@
 package com.midnight.sindicato.data;
 
-import android.content.res.Resources;
+import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.midnight.sindicato.R;
+import com.midnight.sindicato.data.login.LoginResultState;
 import com.midnight.sindicato.data.model.CustomUser;
 import com.midnight.sindicato.data.model.LoggedInUser;
+import com.midnight.sindicato.ui.login.LoginViewModel;
 import com.midnight.sindicato.util.RequestMaker;
 
 import java.io.IOException;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import okhttp3.Call;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.internal.http.HttpHeaders;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
 public class LoginDataSource {
 
-    private String baseUrl = Resources.getSystem().getString(R.string.base_url);
+    private Context context;
+    private String baseUrl;
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public LoginDataSource(Context context) {
+        this.context = context;
+        this.baseUrl = context.getString(R.string.base_url);
+    }
 
+    public void login(String username, String password, LoginViewModel loginViewModel){
+        Call call = this.createHttpCall(username, password);
+        this.makeRequest(call, loginViewModel);
+    }
+
+    private Call createHttpCall(String username, String password){
         CustomUser user = new CustomUser(username, password);
         RequestMaker<CustomUser> request = new RequestMaker<>();
-        Call loginRequest = request.post(user, baseUrl);
+        String loginUrl = baseUrl + "api/v1/user/login";
+        Call loginRequest = request.post(user, loginUrl);
 
-        //try with resources, pois vamos abrir uma conexão e vai ser fechada automaticamente pelo try with resources
+        return loginRequest;
+    }
+
+    private Result<LoggedInUser> makeLoginRequest(Call loginRequest) {
+        //try with resources, pois vamos abrir uma conexão que vai ser fechada automaticamente pelo try with resources
         try(Response response = loginRequest.execute()) {
+            if(response.code() != HttpsURLConnection.HTTP_OK){
+                Log.d("Login result" , "Erro ao efetuar login " +  response.code());
+                return new Result.Error(new IOException("Erro ao realizar o login " + response.code()));
+            }
+
             String jsonResponse = response.body().string();
             Gson gson = new Gson();
             CustomUser customUserDate = gson.fromJson(jsonResponse, CustomUser.class);
@@ -41,12 +63,27 @@ public class LoginDataSource {
                             customUserDate.getId().toString(),
                             customUserDate.getName());
 
+            Log.d("Login result" , "Login efetuado com sucesso");
             return new Result.Success<>(loggedInUser);
-        }catch (IOException e ){
-            return new Result.Error(new IOException("Error logging in", e));
+        }catch (Exception e ){
+            Log.d("Login result" , "Erro ao efetuar login " + e);
+            return new Result.Error(new IOException("Erro ao realizar o login", e));
         }
+    }
 
+    private void makeRequest(Call call, LoginViewModel loginViewModel){
+        final LoginResultState resultState = new LoginResultState();
+        Runnable requestRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Result result = makeLoginRequest(call);
+                resultState.setResult(result);
+                loginViewModel.loginCallback(resultState.getResult());
+            }
+        };
 
+        Thread thread = new Thread(requestRunnable);
+        thread.start();
     }
 
     public void logout() {

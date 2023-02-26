@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="base_url" type="string">http://localhost:8080/api/v1/user/new</item>
 
 </resources>
