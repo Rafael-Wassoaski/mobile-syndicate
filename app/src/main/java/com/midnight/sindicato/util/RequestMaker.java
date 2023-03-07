@@ -3,6 +3,12 @@ package com.midnight.sindicato.util;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.midnight.sindicato.data.Result;
+
+import java.io.IOException;
+import java.util.Optional;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -14,9 +20,9 @@ import okhttp3.Response;
 public class RequestMaker<T> {
     private OkHttpClient httpClient = new OkHttpClient();
 
-    public Call post(T entity, String url){
+    public Call post(T entity, String url) {
 
-        Log.d("Request" , "Post para " + url);
+        Log.d("Request", "Post para " + url);
         Gson gson = new Gson();
         String userJson = gson.toJson(entity);
 
@@ -26,6 +32,21 @@ public class RequestMaker<T> {
                 .post(requestBody).
                 build();
 
-        return  httpClient.newCall(request);
+        return httpClient.newCall(request);
+    }
+
+    public static String makeRequest(Call call, int acceptedStatus) throws IOException {
+        Response response = call.execute();
+
+        if (response.code() != acceptedStatus) {
+            Log.d("Request result", "Erro ao realizar request login " + response.code());
+            throw new IOException("Erro ao realizar o request " + response.code());
+        }
+
+        String jsonResponse = response.body().string();
+        Log.d("Request result", "Request efetuado com sucesso");
+        response.close();
+
+        return jsonResponse;
     }
 }

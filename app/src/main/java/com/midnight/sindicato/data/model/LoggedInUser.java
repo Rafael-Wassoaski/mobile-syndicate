@@ -20,4 +20,10 @@ public class LoggedInUser {
     public String getDisplayName() {
         return displayName;
     }
+
+    public static LoggedInUser fromCustomUser(CustomUser customUser){
+        return new LoggedInUser(
+                customUser.getId().toString(),
+                customUser.getName());
+    }
 }

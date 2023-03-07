@@ -3,6 +3,7 @@
     <!-- Strings related to login -->
     <string name="prompt_cpf">CPF</string>
     <string name="prompt_email">Email</string>
+    <string name="prompt_name">Nome</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_confirm">Confirme sua senha</string>
     <string name="action_sign_in">Entrar</string>
