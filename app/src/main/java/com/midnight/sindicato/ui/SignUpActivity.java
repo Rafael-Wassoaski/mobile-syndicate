@@ -1,4 +1,4 @@
-package com.midnight.sindicato;
+package com.midnight.sindicato.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.midnight.sindicato.R;
 import com.midnight.sindicato.data.Result;
 import com.midnight.sindicato.entity.User;
 import com.midnight.sindicato.util.JsonUtils;
@@ -111,10 +112,10 @@ public class SignUpActivity extends AppCompatActivity {
         EditText nameText = findViewById(R.id.complete_name);
 
         User user = new User.Builder()
-                .cpf(cpfText.toString())
-                .email(emailText.toString())
-                .username(nameText.toString())
-                .password(passwordConfirm.toString())
+                .cpf(cpfText.getText().toString())
+                .email(emailText.getText().toString())
+                .username(nameText.getText().toString())
+                .password(passwordConfirm.getText().toString())
                 .build();
 
         return user;

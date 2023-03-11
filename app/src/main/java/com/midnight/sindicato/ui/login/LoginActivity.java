@@ -23,7 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.midnight.sindicato.SignUpActivity;
+import com.midnight.sindicato.ui.SignUpActivity;
 import com.midnight.sindicato.databinding.ActivityLoginBinding;
 import com.midnight.sindicato.ui.MainActivity;
 import com.midnight.sindicato.R;

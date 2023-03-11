@@ -24,9 +24,10 @@ public class RequestMaker<T> {
 
         Log.d("Request", "Post para " + url);
         Gson gson = new Gson();
-        String userJson = gson.toJson(entity);
+        String json = gson.toJson(entity);
+        Log.d("Request Info", "Corpo da requisicao: \n" + json);
 
-        RequestBody requestBody = RequestBody.create(userJson, MediaType.get("application/json; charset=utf-8"));
+        RequestBody requestBody = RequestBody.create(json, MediaType.get("application/json; charset=utf-8"));
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody).
