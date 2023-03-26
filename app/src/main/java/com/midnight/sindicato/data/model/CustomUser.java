@@ -1,17 +1,35 @@
 package com.midnight.sindicato.data.model;
 
 public class CustomUser {
-    private String name;
+    private String cpf;
     private String password;
     private Long id;
+    private String token;
+    private String username;
 
     public CustomUser(String name, String password) {
-        this.name = name;
+        this.cpf = name;
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 
     public String getPassword() {
@@ -22,8 +40,8 @@ public class CustomUser {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public void setPassword(String password) {

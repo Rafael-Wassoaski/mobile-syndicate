@@ -1,6 +1,7 @@
 package com.midnight.sindicato.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.midnight.sindicato.R;
 import com.midnight.sindicato.data.login.LoginResultState;
@@ -45,16 +46,19 @@ public class LoginDataSource {
     }
 
     private Result<LoggedInUser> makeLogin(Call loginRequest) {
-        //try with resources, pois vamos abrir uma conexão que vai ser fechada automaticamente pelo try with resources
         try {
 
             String jsonResponse = RequestMaker.makeRequest(loginRequest, HttpsURLConnection.HTTP_OK);
+            Log.d("Request login", "JSON " +jsonResponse);
+
             JsonUtils<CustomUser> jsonUtils = new JsonUtils<>(CustomUser.class);
             CustomUser customUserDate = jsonUtils.jsonStringToEntity(jsonResponse);
 
             LoggedInUser loggedInUser = LoggedInUser.fromCustomUser(customUserDate);
+            Log.d("Request login", "login efetuado com sucesso " + loggedInUser.toString());
             return new Result.Success<>(loggedInUser);
         } catch (Exception e) {
+            Log.d("Request login", "Erro ao realizar o login " + e.getLocalizedMessage());
             return new Result.Error(new IOException("Erro ao realizar o login", e));
         }
     }

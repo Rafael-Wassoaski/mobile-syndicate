@@ -5,25 +5,24 @@ package com.midnight.sindicato.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
     private String displayName;
+    private String token;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
+    public LoggedInUser(String displayName, String token) {
         this.displayName = displayName;
+        this.token = token;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
     public String getDisplayName() {
         return displayName;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public static LoggedInUser fromCustomUser(CustomUser customUser){
-        return new LoggedInUser(
-                customUser.getId().toString(),
-                customUser.getName());
+        return new LoggedInUser(customUser.getUsername(), customUser.getToken());
     }
 }

@@ -40,12 +40,12 @@ public class RequestMaker<T> {
         Response response = call.execute();
 
         if (response.code() != acceptedStatus) {
-            Log.d("Request result", "Erro ao realizar request login " + response.code());
+            Log.d("Request result", "Erro ao realizar request " + response.code() + " mensagem: " + response.body().string());
             throw new IOException("Erro ao realizar o request " + response.code());
         }
 
         String jsonResponse = response.body().string();
-        Log.d("Request result", "Request efetuado com sucesso");
+        Log.d("Request result", "Request efetuado com sucesso: " + response.code() + " json " + jsonResponse);
         response.close();
 
         return jsonResponse;
