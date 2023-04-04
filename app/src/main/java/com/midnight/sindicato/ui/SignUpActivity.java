@@ -36,17 +36,14 @@ public class SignUpActivity extends AppCompatActivity {
     private TextWatcher getPasswordWatcher() {
         return new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
-                confirmPasswords();
+                validatePasswords();
             }
         };
     }
@@ -66,6 +63,14 @@ public class SignUpActivity extends AppCompatActivity {
         passwordConfirm.addTextChangedListener(getPasswordWatcher());
 
         createUser();
+    }
+
+    private void inputPatters(){
+        EditText cpfText = findViewById(R.id.cpf_cadastro);
+        EditText emailText = findViewById(R.id.email_cadastro);
+        EditText nameText = findViewById(R.id.complete_name);
+
+
     }
 
     private void createUser() {
@@ -121,11 +126,28 @@ public class SignUpActivity extends AppCompatActivity {
         return user;
     }
 
+    private void validatePasswords(){
+        confirmPasswords();
+        checkPasswordMinLength(password);
+    }
+
+    private void checkPasswordMinLength(EditText passwordField){
+        passwordField.setError(null);
+
+        if(passwordField.getText().toString().length() < 8){
+            passwordField.setError(getString(R.string.min_password_length));
+            signUpButton.setEnabled(false);
+            return;
+        }
+
+        signUpButton.setEnabled(true);
+    }
+
     private void confirmPasswords() {
         passwordConfirm.setError(null);
 
         if (!password.getText().toString().equals(passwordConfirm.getText().toString())) {
-            passwordConfirm.setError("Senhas não coincidem");
+            passwordConfirm.setError(getString(R.string.differente_passwords));
             signUpButton.setEnabled(false);
             return;
         }
