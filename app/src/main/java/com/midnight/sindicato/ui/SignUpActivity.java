@@ -6,8 +6,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText password;
     private EditText passwordConfirm;
+    private EditText emailText;
+    private EditText cpfText;
+    private EditText nameText;
     private Button signUpButton;
     private String baseUrl;
 
@@ -48,6 +53,99 @@ public class SignUpActivity extends AppCompatActivity {
         };
     }
 
+    private TextWatcher getCpfWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String cpf = editable.toString();
+                isCPFValid(cpf);
+            }
+        };
+    }
+
+    private TextWatcher getEmailWatcher(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String email = editable.toString();
+                isValidEmail(email);
+            }
+        };
+    }
+
+    private TextWatcher getNameWatcher(){
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String name = editable.toString();
+                isNameValid(name);
+            }
+        };
+    }
+
+    private void isValidEmail(String target) {
+        emailText.setError(null);
+
+        if (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()) {
+            emailText.setError(getString(R.string.invalid_mail));
+            signUpButton.setEnabled(false);
+            return;
+        }
+
+        emailText.setEnabled(true);
+    }
+
+
+    private void isNameValid(String target) {
+        nameText.setError(null);
+
+        if (TextUtils.isEmpty(target)) {
+            nameText.setError(getString(R.string.invalid_name));
+            signUpButton.setEnabled(false);
+            return;
+        }
+
+        nameText.setEnabled(true);
+    }
+
+    private void isCPFValid(String target) {
+        cpfText.setError(null);
+
+        if (TextUtils.isEmpty(target)) {
+            cpfText.setError(getString(R.string.invalid_cpf));
+            signUpButton.setEnabled(false);
+            return;
+        }
+
+        cpfText.setEnabled(true);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,21 +154,19 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.password_cadastro);
         passwordConfirm = findViewById(R.id.confirm_password_cadastro);
         signUpButton = findViewById(R.id.cadastroButton);
+        cpfText = findViewById(R.id.cpf_cadastro);
+        emailText = findViewById(R.id.email_cadastro);
+        nameText = findViewById(R.id.complete_name);
         this.baseUrl = this.getString(R.string.base_url);
 
         signUpButton.setEnabled(false);
 
         passwordConfirm.addTextChangedListener(getPasswordWatcher());
+        emailText.addTextChangedListener(getEmailWatcher());
+        cpfText.addTextChangedListener(getCpfWatcher());
+        nameText.addTextChangedListener(getNameWatcher());
 
         createUser();
-    }
-
-    private void inputPatters(){
-        EditText cpfText = findViewById(R.id.cpf_cadastro);
-        EditText emailText = findViewById(R.id.email_cadastro);
-        EditText nameText = findViewById(R.id.complete_name);
-
-
     }
 
     private void createUser() {
@@ -112,9 +208,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private User extractFormUserData() {
-        EditText cpfText = findViewById(R.id.cpf_cadastro);
-        EditText emailText = findViewById(R.id.email_cadastro);
-        EditText nameText = findViewById(R.id.complete_name);
 
         User user = new User.Builder()
                 .cpf(cpfText.getText().toString())

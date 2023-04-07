@@ -20,6 +20,9 @@
     <string name="base_url">http://192.168.3.2:8080/</string>
     <string name="differente_passwords">Senhas não coincidem</string>
     <string name="min_password_length">Senhas devem ter no mínimo 8 caracteres</string>
+    <string name="invalid_mail">Formato de e-mail inválido</string>
+    <string name="invalid_cpf">CPF Invalido</string>
+    <string name="invalid_name">Nome Invalido</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
