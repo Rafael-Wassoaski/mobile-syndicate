@@ -4,25 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.midnight.sindicato.R;
-import com.midnight.sindicato.data.Result;
 import com.midnight.sindicato.entity.User;
 import com.midnight.sindicato.util.JsonUtils;
 import com.midnight.sindicato.util.RequestMaker;
 import com.midnight.sindicato.util.Utils;
+import com.midnight.sindicato.util.validators.textWatcherFactory.EmailTextWatcher;
+import com.midnight.sindicato.util.validators.textWatcherFactory.EmptyTextWatcher;
+import com.midnight.sindicato.util.validators.textWatcherFactory.PasswordTextWatcher;
+import com.midnight.sindicato.util.validators.textWatcherFactory.TextWatcherFactory;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -37,114 +34,6 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText nameText;
     private Button signUpButton;
     private String baseUrl;
-
-    private TextWatcher getPasswordWatcher() {
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                validatePasswords();
-            }
-        };
-    }
-
-    private TextWatcher getCpfWatcher() {
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String cpf = editable.toString();
-                isCPFValid(cpf);
-            }
-        };
-    }
-
-    private TextWatcher getEmailWatcher(){
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String email = editable.toString();
-                isValidEmail(email);
-            }
-        };
-    }
-
-    private TextWatcher getNameWatcher(){
-        return new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String name = editable.toString();
-                isNameValid(name);
-            }
-        };
-    }
-
-    private void isValidEmail(String target) {
-        emailText.setError(null);
-
-        if (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()) {
-            emailText.setError(getString(R.string.invalid_mail));
-            signUpButton.setEnabled(false);
-            return;
-        }
-
-        emailText.setEnabled(true);
-    }
-
-
-    private void isNameValid(String target) {
-        nameText.setError(null);
-
-        if (TextUtils.isEmpty(target)) {
-            nameText.setError(getString(R.string.invalid_name));
-            signUpButton.setEnabled(false);
-            return;
-        }
-
-        nameText.setEnabled(true);
-    }
-
-    private void isCPFValid(String target) {
-        cpfText.setError(null);
-
-        if (TextUtils.isEmpty(target)) {
-            cpfText.setError(getString(R.string.invalid_cpf));
-            signUpButton.setEnabled(false);
-            return;
-        }
-
-        cpfText.setEnabled(true);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,10 +50,14 @@ public class SignUpActivity extends AppCompatActivity {
 
         signUpButton.setEnabled(false);
 
-        passwordConfirm.addTextChangedListener(getPasswordWatcher());
-        emailText.addTextChangedListener(getEmailWatcher());
-        cpfText.addTextChangedListener(getCpfWatcher());
-        nameText.addTextChangedListener(getNameWatcher());
+        TextWatcherFactory emailTextWatcher = new EmailTextWatcher();
+        PasswordTextWatcher passwordTextWatcher = new PasswordTextWatcher();
+        TextWatcherFactory emptyTextWatcher = new EmptyTextWatcher();
+
+        passwordConfirm.addTextChangedListener(passwordTextWatcher.getTextPasswordWatcher(password, passwordConfirm));
+        emailText.addTextChangedListener(emailTextWatcher.getTextWatcher(emailText));
+        cpfText.addTextChangedListener(emptyTextWatcher.getTextWatcher(cpfText));
+        nameText.addTextChangedListener(emptyTextWatcher.getTextWatcher(nameText));
 
         createUser();
     }
@@ -217,34 +110,5 @@ public class SignUpActivity extends AppCompatActivity {
                 .build();
 
         return user;
-    }
-
-    private void validatePasswords(){
-        confirmPasswords();
-        checkPasswordMinLength(password);
-    }
-
-    private void checkPasswordMinLength(EditText passwordField){
-        passwordField.setError(null);
-
-        if(passwordField.getText().toString().length() < 8){
-            passwordField.setError(getString(R.string.min_password_length));
-            signUpButton.setEnabled(false);
-            return;
-        }
-
-        signUpButton.setEnabled(true);
-    }
-
-    private void confirmPasswords() {
-        passwordConfirm.setError(null);
-
-        if (!password.getText().toString().equals(passwordConfirm.getText().toString())) {
-            passwordConfirm.setError(getString(R.string.differente_passwords));
-            signUpButton.setEnabled(false);
-            return;
-        }
-
-        signUpButton.setEnabled(true);
     }
 }

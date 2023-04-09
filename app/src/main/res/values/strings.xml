@@ -22,7 +22,8 @@
     <string name="min_password_length">Senhas devem ter no mínimo 8 caracteres</string>
     <string name="invalid_mail">Formato de e-mail inválido</string>
     <string name="invalid_cpf">CPF Invalido</string>
-    <string name="invalid_name">Nome Invalido</string>
+    <string name="required_empty_field">O campo não pode ser vazio</string>
+    <string name="undefined_error">Erro desconhecido</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
