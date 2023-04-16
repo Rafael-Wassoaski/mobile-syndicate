@@ -2,6 +2,7 @@ package com.midnight.sindicato.util.validators.textWatcherFactory;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.midnight.sindicato.util.validators.EmailValidation;
@@ -10,8 +11,9 @@ import com.midnight.sindicato.util.validators.EmailValidation;
 public class EmailTextWatcher extends TextWatcherFactory {
 
     @Override
-    public TextWatcher getTextWatcher(EditText editText){
+    public TextWatcher getTextWatcher(EditText editText, Button formButton){
         EmailValidation emailValidation = new EmailValidation();
+        TextWatcherFactory context = this;
 
         return new TextWatcher() {
             @Override
@@ -33,6 +35,8 @@ public class EmailTextWatcher extends TextWatcherFactory {
                     editText.setError(e.getLocalizedMessage());
                     e.printStackTrace();
                 }
+
+                context.notifyTextChange();
             }
         };
     }

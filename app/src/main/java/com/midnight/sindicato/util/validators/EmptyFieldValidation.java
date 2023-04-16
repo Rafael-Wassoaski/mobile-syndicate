@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.midnight.sindicato.R;
 
-protected class EmptyFieldValidation extends EditableValidator{
+public class EmptyFieldValidation extends EditableValidator{
 
     public EmptyFieldValidation() {
         this.errorMessage = Resources.getSystem().getString(R.string.required_empty_field);

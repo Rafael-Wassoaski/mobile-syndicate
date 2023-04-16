@@ -7,7 +7,7 @@ import android.util.Patterns;
 
 import com.midnight.sindicato.R;
 
-protected class EmailValidation extends EditableValidator{
+public class EmailValidation extends EditableValidator{
 
     public EmailValidation() {
         this.errorMessage = Resources.getSystem().getString(R.string.invalid_mail);
@@ -17,7 +17,7 @@ protected class EmailValidation extends EditableValidator{
     public void validateEditable(Editable editable) throws Exception {
         String email = editable.toString();
 
-        if (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!TextUtils.isEmpty(email) && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             throw new Exception(errorMessage);
         }
     }

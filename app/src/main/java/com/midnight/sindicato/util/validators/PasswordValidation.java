@@ -5,10 +5,10 @@ import android.text.Editable;
 
 import com.midnight.sindicato.R;
 
-protected class PasswordValidation extends EditableValidator{
+public class PasswordValidation extends EditableValidator{
 
     public PasswordValidation() {
-        this.errorMessage = Resources.getSystem().getString(R.string.min_password_length);
+        this.errorMessage =     Resources.getSystem().getString(R.string.min_password_length);
     }
 
     @Override

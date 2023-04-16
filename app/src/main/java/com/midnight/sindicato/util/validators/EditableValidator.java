@@ -2,13 +2,12 @@ package com.midnight.sindicato.util.validators;
 
 import android.content.res.Resources;
 import android.text.Editable;
+import android.widget.Button;
 
 import com.midnight.sindicato.R;
 
-protected abstract class EditableValidator {
-    protected String errorMessage = Resources.getSystem().getString(R.string.undefined_error);
+public abstract class EditableValidator {
+    protected String errorMessage;
 
-    public void validateEditable(Editable editable) throws Exception {
-        throw new Exception(errorMessage);
-    }
+    public abstract void validateEditable(Editable editable) throws Exception;
 }

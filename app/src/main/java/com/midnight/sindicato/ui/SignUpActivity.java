@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.midnight.sindicato.R;
 import com.midnight.sindicato.entity.User;
+import com.midnight.sindicato.interfaces.FormObserver;
 import com.midnight.sindicato.util.JsonUtils;
 import com.midnight.sindicato.util.RequestMaker;
 import com.midnight.sindicato.util.Utils;
@@ -20,12 +21,13 @@ import com.midnight.sindicato.util.validators.textWatcherFactory.PasswordTextWat
 import com.midnight.sindicato.util.validators.textWatcherFactory.TextWatcherFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import okhttp3.Call;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements FormObserver {
 
     private EditText password;
     private EditText passwordConfirm;
@@ -54,10 +56,14 @@ public class SignUpActivity extends AppCompatActivity {
         PasswordTextWatcher passwordTextWatcher = new PasswordTextWatcher();
         TextWatcherFactory emptyTextWatcher = new EmptyTextWatcher();
 
-        passwordConfirm.addTextChangedListener(passwordTextWatcher.getTextPasswordWatcher(password, passwordConfirm));
-        emailText.addTextChangedListener(emailTextWatcher.getTextWatcher(emailText));
-        cpfText.addTextChangedListener(emptyTextWatcher.getTextWatcher(cpfText));
-        nameText.addTextChangedListener(emptyTextWatcher.getTextWatcher(nameText));
+        emailTextWatcher.setFormObserver(this);
+        passwordTextWatcher.setFormObserver(this);
+        emptyTextWatcher.setFormObserver(this);
+
+        passwordConfirm.addTextChangedListener(passwordTextWatcher.getTextPasswordWatcher(password, passwordConfirm, signUpButton));
+        emailText.addTextChangedListener(emailTextWatcher.getTextWatcher(emailText, signUpButton));
+        cpfText.addTextChangedListener(emptyTextWatcher.getTextWatcher(cpfText, signUpButton));
+        nameText.addTextChangedListener(emptyTextWatcher.getTextWatcher(nameText, signUpButton));
 
         createUser();
     }
@@ -110,5 +116,26 @@ public class SignUpActivity extends AppCompatActivity {
                 .build();
 
         return user;
+    }
+
+    private void releaseSignInButton(){
+        ArrayList<Boolean> fieldErrors = new ArrayList<>();
+
+        fieldErrors.add(cpfText.getError() == null);
+        fieldErrors.add(passwordConfirm.getError() == null);
+        fieldErrors.add(password.getError() == null);
+        fieldErrors.add(nameText.getError() == null);
+        fieldErrors.add(emailText.getError() == null);
+
+        if(fieldErrors.contains(false)){
+            signUpButton.setEnabled(false);
+            return;
+        }
+        signUpButton.setEnabled(true);
+    }
+
+    @Override
+    public void onTextFieldChange() {
+        this.releaseSignInButton();
     }
 }

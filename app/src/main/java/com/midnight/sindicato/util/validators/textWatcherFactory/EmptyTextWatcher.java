@@ -2,6 +2,7 @@ package com.midnight.sindicato.util.validators.textWatcherFactory;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.midnight.sindicato.util.validators.EmptyFieldValidation;
@@ -9,9 +10,9 @@ import com.midnight.sindicato.util.validators.EmptyFieldValidation;
 public class EmptyTextWatcher extends TextWatcherFactory {
 
     @Override
-    public TextWatcher getTextWatcher(EditText editText){
+    public TextWatcher getTextWatcher(EditText editText, Button formButton){
         EmptyFieldValidation emptyValidation = new EmptyFieldValidation();
-
+        TextWatcherFactory context = this;
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -32,6 +33,8 @@ public class EmptyTextWatcher extends TextWatcherFactory {
                     editText.setError(e.getLocalizedMessage());
                     e.printStackTrace();
                 }
+
+                context.notifyTextChange();
             }
         };
     }
