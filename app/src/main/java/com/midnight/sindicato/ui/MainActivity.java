@@ -24,6 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private TableLayout tableLayout;
     private List<ActionController> actionControllers;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,13 @@ public class MainActivity extends AppCompatActivity {
         actionControllers.add(new NewsController());
 
         tableLayout = (TableLayout) findViewById(R.id.tableLayout1);
+        this.context = getApplicationContext();
 
         this.initButtonsByList(actionControllers);
+    }
+
+    public static Context getContext() {
+        return context;
     }
 
     private void initButtonsByList(List<ActionController> actionControllers){

@@ -4,11 +4,13 @@ import android.content.res.Resources;
 import android.text.Editable;
 
 import com.midnight.sindicato.R;
+import com.midnight.sindicato.ui.MainActivity;
+import com.midnight.sindicato.ui.SignUpActivity;
 
 public class PasswordValidation extends EditableValidator{
 
     public PasswordValidation() {
-        this.errorMessage =     Resources.getSystem().getString(R.string.min_password_length);
+        this.errorMessage = MainActivity.getContext().getString(R.string.min_password_length);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class PasswordValidation extends EditableValidator{
 
     public void confirmPasswords(String password, String passwordConfirm) throws Exception {
         if (!password.equals(passwordConfirm)) {
-            String differentPassword = Resources.getSystem().getString(R.string.differente_passwords);
+            String differentPassword = SignUpActivity.getContext().getString(R.string.differente_passwords);
             throw new Exception(differentPassword);
         }
     }

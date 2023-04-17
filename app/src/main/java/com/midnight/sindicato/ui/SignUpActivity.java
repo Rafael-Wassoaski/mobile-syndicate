@@ -68,6 +68,10 @@ public class SignUpActivity extends AppCompatActivity implements FormObserver {
         createUser();
     }
 
+    public static Context getContext(){
+        return getContext();
+    }
+
     private void createUser() {
         this.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,14 +122,18 @@ public class SignUpActivity extends AppCompatActivity implements FormObserver {
         return user;
     }
 
+    private boolean isFieldValid(EditText editText){
+        return editText.getText().length() > 0 && editText.getError() == null;
+    }
+
     private void releaseSignInButton(){
         ArrayList<Boolean> fieldErrors = new ArrayList<>();
 
-        fieldErrors.add(cpfText.getError() == null);
-        fieldErrors.add(passwordConfirm.getError() == null);
-        fieldErrors.add(password.getError() == null);
-        fieldErrors.add(nameText.getError() == null);
-        fieldErrors.add(emailText.getError() == null);
+        fieldErrors.add(isFieldValid(cpfText));
+        fieldErrors.add(isFieldValid(passwordConfirm));
+        fieldErrors.add(isFieldValid(password));
+        fieldErrors.add(isFieldValid(nameText));
+        fieldErrors.add(isFieldValid(emailText));
 
         if(fieldErrors.contains(false)){
             signUpButton.setEnabled(false);
